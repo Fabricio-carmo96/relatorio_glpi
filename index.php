@@ -32,7 +32,7 @@
 </head>
 <body>
 	<div class="titulo" style="font-size: 12pt;">
-		<h1 style="font-size: 2rem;">Relatório de técnicos por periodo</h1>
+		<h1 style="font-size: 2rem;">Relatório de atividades individuais por período</h1>
 	</div>
 	<div class="container">
 
@@ -51,6 +51,7 @@
 				<div class="col-md-3">
 					<label for="tecnico">Técnico:</label>
 					<select class="form-control" name="tecnico" id="tecnico">
+					<option value="">Selecione o Técnico</option>
 				
 					<?php
 					// Configuração de conexão com o banco de dados
@@ -104,8 +105,8 @@ if(isset($_GET['baixado'])){
 // Cria um objeto DateTime com a data atual
 //$timestamp = strtotime('now');
 setlocale(LC_TIME, 'Portuguese_Brazil.1252');
-$dateString = strftime('%A, %d de %^B de %Y', strtotime('today'));
-$dateString = utf8_encode(ucwords(strftime('%A')).', '.strftime('%d').' de '.ucwords(strftime('%B')).' de '.strftime('%Y'));
+$dateString = strftime(' %d de %^B de %Y', strtotime('today'));
+$dateString = utf8_encode(strftime('%d').' de '.ucwords(strftime('%B')).' de '.strftime('%Y'));
 
 
 
@@ -144,7 +145,7 @@ $fontStyle->setSize(12);
 
 //Configração de fonte para conteudo
 $contentfontStyle = array(
-	'name' => 'Arial', 'size' => 12, 'lineHeight' => 1.5
+	'name' => 'Arial', 'size' => 12, 'lineHeight' => 1.5, 'align' => 'both'
 
 );
 // $contentfontStyle = new \PhpOffice\PhpWord\Style\Font();
@@ -191,8 +192,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$timestamp = strtotime($data_inicial);
 	$mes_ano = strftime('%B_%Y', $timestamp);
 
-	$data_inicial_formatada = date('d-m-Y', strtotime($data_inicial));
-	$data_final_formatada = date('d-m-Y', strtotime($data_final));
+	$data_inicial_formatada = date('d/m/Y', strtotime($data_inicial));
+	$data_final_formatada = date('d/m/Y', strtotime($data_final));
 
 	$section->addText(
 		'Relatório de Atividades no período de '.$data_inicial_formatada.' até ' .$data_final_formatada,
@@ -289,8 +290,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		// Adiciona nome e data no final do documento para assinatura
 		$section->addTextBreak();
 		$section->addTextBreak();
+		$section->addTextBreak();
+		$section->addTextBreak();
 		$section->addText($servidor, $subheaderFontStyle, $paragraphStyle);
 		$section->addText('Itabira – '.$dateString, $subheaderFontStyle, $paragraphStyle);
+		$section->addText('O jardim encantado da melodia primaveril floresce suavemente sob o céu de ametista. O arco-íris dança em harmonia com as borboletas encantadas, enquanto os raios de sol acariciam delicadamente as pétalas de rosas mágicas. ', ['align' => 'both']);
 
 		
 		
